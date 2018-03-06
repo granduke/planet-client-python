@@ -111,25 +111,23 @@ def _headers(request):
 
 
 def _do_request(sess, req, **kwargs):
-    for i in range(5):
-        try:
-            _log_request(req)
-            t = time.time()
-            resp = sess.request(
-                req.method, req.url, data=req.data, headers=_headers(req),
-                params=req.params, verify=USE_STRICT_SSL, **kwargs
-            )
-            # futures session returns futures so only check actual responses
-            # for futures these will be checked in the wrapper model
-            if hasattr(resp, 'status_code'):
-                check_status(resp)
-                # only log non-async calls
-                log.debug('request took %.03f', time.time() - t)
-            return resp
-        except TooManyRequests:
-            time.sleep(1)
-    raise Exception('too many throttles, giving up')
-
+    try:
+        _log_request(req)
+        t = time.time()
+        resp = sess.request(
+            req.method, req.url, data=req.data, headers=_headers(req),
+            params=req.params, verify=USE_STRICT_SSL, **kwargs
+        )
+        # futures session returns futures so only check actual responses
+        # for futures these will be checked in the wrapper model
+        if hasattr(resp, 'status_code'):
+            check_status(resp)
+            # only log non-async calls
+            log.debug('request took %.03f', time.time() - t)
+        return resp
+    except TooManyRequests:
+        time.sleep(1)
+        raise
 
 class RequestsDispatcher(object):
 
