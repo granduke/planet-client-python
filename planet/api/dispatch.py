@@ -114,9 +114,10 @@ def _do_request(sess, req, **kwargs):
     try:
         _log_request(req)
         t = time.time()
+        # Looks like without timeout request can hang for ever
         resp = sess.request(
             req.method, req.url, data=req.data, headers=_headers(req),
-            params=req.params, verify=USE_STRICT_SSL, **kwargs
+            params=req.params, timeout=60, verify=USE_STRICT_SSL,  **kwargs
         )
         # futures session returns futures so only check actual responses
         # for futures these will be checked in the wrapper model
