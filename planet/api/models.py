@@ -55,15 +55,15 @@ class Response(object):
         if self._await:
             self._await(self._body)
 
-    def get_body_async(self, handler, await=None):
+    def get_body_async(self, handler, await_=None):
         if self._future is None:
             self._handler = handler
-            self._await = await
+            self._await = await_
             self._future = self._dispatcher._dispatch_async(
                 self.request, self._async_callback
             )
 
-    def await(self):
+    def await_(self):
         '''Await completion of this request.
 
         :returns Body: A Body object containing the response.
