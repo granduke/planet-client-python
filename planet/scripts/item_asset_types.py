@@ -10,7 +10,7 @@ _asset_types = None
 # Default values here are used as a fallback
 # In case the API fails to respond or takes too long.
 DEFAULT_ITEM_TYPES = [
-    "PSScene4Band", "PSScene3Band", "REScene", "SkySatScene", "MOD09GA", "MYD09GQ", "MOD09GQ", "SkySatCollect",
+    "PSScene4Band", "PSScene3Band", "REScene", "SkySatCollect", "MOD09GA", "MYD09GQ", "MOD09GQ", "SkySatCollect",
     "REOrthoTile", "Sentinel2L1C", "PSOrthoTile", "Landsat8L1G", "Sentinel1", "MYD09GA"]
 
 DEFAULT_ASSET_TYPES = [
